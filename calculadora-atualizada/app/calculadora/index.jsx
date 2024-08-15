@@ -35,7 +35,7 @@ const App = () => {
   return(
     <View style={styles.container}>
       <Text>Calculadora</Text>
-      <SafeAreaView>
+      <View>
         <TextInput 
           style={styles.input}
           onChangeText={setNum1}
@@ -49,7 +49,7 @@ const App = () => {
           value={num2}
           keyboardType="numeric"
         />
-      </SafeAreaView>
+      </View>
       <View style={styles.div}>
         <Button
           onPress={() => op('+')}

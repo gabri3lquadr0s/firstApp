@@ -7,8 +7,8 @@ const Input = (props) => {
             <TextInput 
                 style={style.input}
                 onChangeText={props.onchange}
-                value={props.val}
-                keyboardType="numeric"
+                placeholder="0,00"
+                inputType="numeric"
             />
         </View>
     )

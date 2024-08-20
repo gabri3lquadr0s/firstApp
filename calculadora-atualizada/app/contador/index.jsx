@@ -35,15 +35,12 @@ const App = () => {
     return(
        <View>
             <View style={style.container}>
-                <Image source={{
-                    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDqauTZz_W6scTRBOiVbkdn-lGhKLHdyh8LA&s',
-                }}/>
+                <Image source={require('../../assets/santander.png')}/>
                 <Text style={style.txt}>Saldo Atual na Conta</Text>
                 <Text style={style.valor}>R$ {total}</Text>
                 <Text style={style.txtNormal}>Digite o valor abaixo e escolha uma das operações bancárias</Text>
                 <Input 
                     onchange={setVal}
-                    val={val}
                 />
                 <Buttons 
                     btn1={"Sacar"}
@@ -71,9 +68,6 @@ const style = StyleSheet.create({
         fontSize: 18,
         color: 'grey',
     },
-    txtNormal: {
-
-    }
 })
 
 export default App

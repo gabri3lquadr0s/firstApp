@@ -8,7 +8,7 @@ const Input = (props) => {
                 style={style.input}
                 onChangeText={props.onchange}
                 placeholder="0,00"
-                inputType="numeric"
+                keyboardType="numeric"
             />
         </View>
     )

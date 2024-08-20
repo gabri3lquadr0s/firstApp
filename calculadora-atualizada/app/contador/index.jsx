@@ -1,12 +1,15 @@
 import React from "react";
 import { useState } from "react";
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, Button} from 'react-native';
 import Buttons from "./components/buttons";
 import Input from "./components/input";
+import Modal from "react-native-modal";
 
 const App = () => {
     const [total, setTotal] = useState(7320.92);
     const [val, setVal] = useState(0);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const handleModal = () => setIsModalVisible(() => !isModalVisible);
     
     function less() {
         const percent = 0.025;
@@ -15,6 +18,7 @@ const App = () => {
         let multa = first * percent;
         let newval = first - multa;
         if(newval < 0) {
+            setIsModalVisible(() => !isModalVisible);
             return;
         } 
         setTotal(newval.toFixed(2));
@@ -35,6 +39,12 @@ const App = () => {
     return(
        <View>
             <View style={style.container}>
+                <Modal isVisible={isModalVisible}>
+                    <View style={style.container2}>
+                        <Text style={style.title2}>Você não tem dinheiro suficiente</Text>
+                        <Button title="Ok" onPress={handleModal} />
+                    </View>
+                </Modal>
                 <Image source={require('../../assets/santander.png')}/>
                 <Text style={style.txt}>Saldo Atual na Conta</Text>
                 <Text style={style.valor}>R$ {total}</Text>
@@ -55,19 +65,27 @@ const App = () => {
 
 const style = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: "center",
-        alignItems: "center",
-        gap: 25,
+        alignItems: "center"
     },
     valor: {
         fontSize: 40,
-        fontWeight: 700
+        fontWeight: 'bold'
     },
     txt: {
         fontSize: 18,
         color: 'grey',
     },
+    container2: {
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "white",
+        height: 100
+    },
+    title2: {
+        fontSize: 20,
+        fontWeight: "bold",
+      },
 })
 
 export default App

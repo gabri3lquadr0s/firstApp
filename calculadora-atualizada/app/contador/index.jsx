@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import {View, Text, Image, StyleSheet, Button} from 'react-native';
+import {View, Text, Image, StyleSheet, Button, Pressable} from 'react-native';
 import Buttons from "./components/buttons";
 import Input from "./components/input";
 import Modal from "react-native-modal";
@@ -9,7 +9,10 @@ const App = () => {
     const [total, setTotal] = useState(7320.92);
     const [val, setVal] = useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalVisible2, setIsModalVisible2] = useState(false);
+    const [op, setOp] = useState('')
     const handleModal = () => setIsModalVisible(() => !isModalVisible);
+    const handleModal2 = () => {setIsModalVisible2(() => !isModalVisible2)};
     
     function less() {
         const percent = 0.025;
@@ -22,6 +25,7 @@ const App = () => {
             return;
         } 
         setTotal(newval.toFixed(2));
+        handleModal2();
     }
 
     function add() {
@@ -33,6 +37,7 @@ const App = () => {
             return;
         } 
         setTotal(newval.toFixed(2));
+        handleModal2();
     }
 
 
@@ -45,6 +50,19 @@ const App = () => {
                         <Button title="Ok" onPress={handleModal} />
                     </View>
                 </Modal>
+                <Modal isVisible={isModalVisible2}>
+                    <View style={style.container2}>
+                        <Text style={style.title2}>Tem certeza que quer realizar essa transação?</Text>
+                        <Text>Saldo Atual: {total}</Text>
+                        {
+                            op == '-' ? <Text>Saldo Final: {total - val}</Text> 
+                            && <Button title="Confirmar transação" onPress={() => {less()}} />
+                            : <Text>Saldo Final: {total + val}</Text>
+                            && <Button title="Confirmar transação" onPress={() => {add()}} />
+                        }
+                        
+                    </View>
+                </Modal>
                 <Image source={require('../../assets/santander.png')}/>
                 <Text style={style.txt}>Saldo Atual na Conta</Text>
                 <Text style={style.valor}>R$ {total}</Text>
@@ -55,8 +73,8 @@ const App = () => {
                 <Buttons 
                     btn1={"Sacar"}
                     btn2={"Depositar"}
-                    press1={() => {less()}}
-                    press2={() => {add()}}
+                    press1={() => {handleModal2(); setOp('-')}}
+                    press2={() => {handleModal2(); setOp('+')}}
                 />
             </View>
        </View> 

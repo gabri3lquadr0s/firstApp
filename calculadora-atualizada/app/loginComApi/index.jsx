@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {View, Text, StyleSheet, TextInput, Pressable, SafeAreaView, Button,} from 'react-native'
+import {View, Text, StyleSheet, TextInput, Pressable, SafeAreaView, Button, Image,} from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import axios from 'axios';
 import Modal from "react-native-modal";
@@ -19,7 +19,7 @@ export default function SignUp() {
         try {
             const response = await axios.post(
             `https://taskhub-s37f.onrender.com/auth/signup`,
-            {"name":name,"email":email,"password":password}
+            {"name":name,"email":email,"password":password},
             );
             if (response.status === 200) {
                 setModal('Usuário criado com sucesso');
@@ -42,9 +42,9 @@ export default function SignUp() {
                     <Button title="Ok" onPress={() => setIsModalVisible(() => !isModalVisible)} color="black"/>
                 </View>
             </Modal>
-            {/*<View>*/}
-            {/*    <Text style={styles.title}>TaskHub</Text>*/}
-            {/*</View>*/}
+            <View style={styles.containerImg}>
+                <Image source={require('../../assets/taskhub.png')}/>
+            </View>
             <View style={styles.container}>
                 <Text style={styles.titleForm}>Sign Up</Text>
                 <View style={styles.form}>
@@ -69,14 +69,20 @@ export default function SignUp() {
 
 const styles = StyleSheet.create({
     main: {
-        flex: 1,
+        display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
     },
     container: {
-        flex: 1,
         flexDirection: "column",
+        alignItems: "center"
+    },
+    containerImg: {
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 50,
     },
     form: {
         display: "flex",
@@ -94,7 +100,6 @@ const styles = StyleSheet.create({
     },
     titleForm: {
         textAlign: "left",
-        marginLeft: 10,
         fontSize: 30,
         fontWeight: "bold",
         marginBottom: 20

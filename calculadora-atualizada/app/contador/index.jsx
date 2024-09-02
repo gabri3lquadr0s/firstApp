@@ -52,7 +52,7 @@ const App = () => {
                         <Button title="Ok" onPress={handleModal} color="red"/>
                     </View>
                 </Modal>
-                <Modal isVisible={isModalVisible2} style={style.modal}>
+                <Modal isVisible={isModalVisible2}>
                     <View style={style.container2}>
                         <Text style={style.title2}>Tem certeza que quer realizar essa transação?</Text>
                         <Text>Saldo Atual: {total}</Text>

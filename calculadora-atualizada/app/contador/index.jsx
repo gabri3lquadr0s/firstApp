@@ -5,6 +5,8 @@ import Buttons from "./components/buttons";
 import LittleBtn from "./components/littleBtn";
 import Input from "./components/input";
 import Modal from "react-native-modal";
+import {Link} from "expo-router";
+import Voltar from "../voltar";
 
 const App = () => {
     const [total, setTotal] = useState(7320.92);
@@ -80,12 +82,18 @@ const App = () => {
                     press1={() => {less()}}
                     press2={() => {add()}}
                 />
+                <View style={style.aaa}>
+                    <Voltar />
+                </View>
             </View>
        </View> 
     )
 }
 
 const style = StyleSheet.create({
+    aaa: {
+      marginTop: 130,
+    },
     container: {
         justifyContent: "center",
         alignItems: "center"

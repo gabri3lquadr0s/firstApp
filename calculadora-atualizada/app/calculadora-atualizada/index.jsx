@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import {View, Text, StyleSheet, Image, TextInput, SafeAreaView, Button, Pressable} from 'react-native';
 import ButtonLine from "./components/ButtonLine";
+import {Link} from "expo-router";
+import Voltar from "../voltar";
 
 const App = () => {
     const [value, setValue] = useState('');
@@ -118,6 +120,8 @@ const App = () => {
                     />
                 </View>
             </View>
+
+            <Voltar />
         </View>
     )
 }

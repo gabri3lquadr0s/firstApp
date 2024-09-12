@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import {View, Text, StyleSheet, Image, TextInput, SafeAreaView, Button} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import {Link} from "expo-router";
+import Voltar from "../voltar";
 
 const App = () => {
     const [email, setEmail] = useState('');
@@ -42,6 +44,7 @@ const App = () => {
                     />
                     <Text>{res}</Text>
                 </SafeAreaView>
+                <Voltar />
             </SafeAreaView>
         </View>
     )

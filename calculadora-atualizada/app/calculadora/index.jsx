@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import {View, Text, StyleSheet, TextInput, SafeAreaView, Button} from 'react-native';
+import {View, Text, StyleSheet, TextInput, Button, Pressable} from 'react-native';
+import { Link } from "expo-router";
+import Voltar from "../voltar";
 
 const App = () => {
   const [num1, setNum1] = useState('');
@@ -78,6 +80,8 @@ const App = () => {
         />
       </View>
       <Text>{res}</Text>
+
+      <Voltar />
     </View>
   )
 }

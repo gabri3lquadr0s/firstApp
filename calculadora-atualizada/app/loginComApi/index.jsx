@@ -3,6 +3,8 @@ import {View, Text, StyleSheet, TextInput, Pressable, SafeAreaView, Button, Imag
 import AntDesign from '@expo/vector-icons/AntDesign';
 import axios from 'axios';
 import Modal from "react-native-modal";
+import {Link} from "expo-router";
+import Voltar from "../voltar";
 
 export default function SignUp() {
     const [email, setEmail] = useState('');
@@ -63,6 +65,8 @@ export default function SignUp() {
                     <Pressable style={styles.press} onPress={() => {registerUser()}}><Text style={styles.txtPress}>Sign Up</Text></Pressable>
                 </View>
             </View>
+
+            <Voltar />
         </SafeAreaView>
     )
 }

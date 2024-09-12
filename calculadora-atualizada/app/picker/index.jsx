@@ -65,6 +65,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, Button, TextInput, StyleSheet, FlatList } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import {Link} from "expo-router";
 
 const App = () => {
     const [name, setName] = useState('');
@@ -161,6 +162,12 @@ const App = () => {
                     style={styles.image}
                 />
             ) : null}
+
+            <View>
+                <Link href="../">
+                    Voltar
+                </Link>
+            </View>
         </View>
     );
 };

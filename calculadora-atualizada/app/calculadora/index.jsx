@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import {View, Text, StyleSheet, TextInput, Button, Pressable} from 'react-native';
 import { Link } from "expo-router";
-import Voltar from "../voltar";
+import Voltar from "../../components/voltar";
 
 const App = () => {
   const [num1, setNum1] = useState('');

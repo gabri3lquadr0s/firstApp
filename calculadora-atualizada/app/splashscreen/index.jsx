@@ -3,7 +3,7 @@ import { useState } from "react";
 import {View, Text, StyleSheet, Image, TextInput, SafeAreaView, Button} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {Link} from "expo-router";
-import Voltar from "../voltar";
+import Voltar from "../../components/voltar";
 
 const App = () => {
     const [email, setEmail] = useState('');

@@ -6,7 +6,7 @@ import LittleBtn from "./components/littleBtn";
 import Input from "./components/input";
 import Modal from "react-native-modal";
 import {Link} from "expo-router";
-import Voltar from "../voltar";
+import Voltar from "../../components/voltar";
 
 const App = () => {
     const [total, setTotal] = useState(7320.92);

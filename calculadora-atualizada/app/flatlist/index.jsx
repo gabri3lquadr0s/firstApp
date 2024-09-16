@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
-import Voltar from "../voltar";
+import Voltar from "../../components/voltar";
 
 const DATA = [
     { 'id': 1, 'nome': 'teste', 'concluido': false },

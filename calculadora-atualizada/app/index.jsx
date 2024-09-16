@@ -27,6 +27,9 @@ const Index = () => {
             <Link href="./splashscreen" style={styles.links}>
                 <Text style={styles.linkText}>Splashscreen</Text>
             </Link>
+            <Link href="./aboutme" style={styles.links}>
+                <Text style={styles.linkText}>About me</Text>
+            </Link>
         </SafeAreaView>
     )
 }

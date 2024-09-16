@@ -4,7 +4,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import axios from 'axios';
 import Modal from "react-native-modal";
 import {Link} from "expo-router";
-import Voltar from "../voltar";
+import Voltar from "../../components/voltar";
 
 export default function SignUp() {
     const [email, setEmail] = useState('');

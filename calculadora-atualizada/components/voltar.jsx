@@ -5,7 +5,7 @@ import { Link } from "expo-router";
 const Voltar = () => {
     return (
         <View style={styles.linkCon}>
-            <Link href="../">
+            <Link href="..">
                 Voltar
             </Link>
         </View>

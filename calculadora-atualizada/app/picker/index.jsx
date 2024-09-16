@@ -68,7 +68,6 @@ import {Picker} from '@react-native-picker/picker';
 import {Link} from "expo-router";
 
 const App = () => {
-    const [name, setName] = useState('');
     const [element, setElement] = useState('');
     const [pokemon, setPokemon] = useState('');
     const [pokemons, setPokemons] = useState([]);
@@ -77,10 +76,10 @@ const App = () => {
     const [img, setImg] = useState('');
 
 
-    const fetchPokemons = async () => {
+    async function getPokemons() {
         try {
-            const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
-            const data = await response.json();
+            const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
+            const data = await res.json();
             setPokemons(data.results);
             setFilteredPokemons(data.results);
         } catch (error) {
@@ -88,10 +87,10 @@ const App = () => {
         }
     };
 
-    const fetchElements = async () => {
+    async function getPokemonTypes() {
         try {
-            const response = await fetch('https://pokeapi.co/api/v2/type');
-            const data = await response.json();
+            const res = await fetch('https://pokeapi.co/api/v2/type');
+            const data = await res.json();
             setElements(data.results);
         } catch (error) {
             console.error(error);
@@ -99,8 +98,8 @@ const App = () => {
     };
 
     useEffect(() => {
-        fetchPokemons();
-        fetchElements();
+        getPokemons();
+        getPokemonTypes();
     }, []);
 
     const handleElementChange = async (element) => {
@@ -119,7 +118,7 @@ const App = () => {
         setFilteredPokemons(pokemonList);
     };
 
-    const getImg = async (url) => {
+   async function getImg() {
         setPokemon(url);
         try {
             fetch(url)

@@ -1,10 +1,18 @@
 import {Image, Text, View, StyleSheet} from "react-native";
 import React from "react";
+import {Link} from "expo-router";
 
 const Item = (props) => {
     return(
         <View style={styles.item}>
-            <Image source={{ uri: props.url }} style={styles.img}/>
+            <Link
+                href={{
+                    'pathname': `aboutme/details/${props.id}`,
+                    'params': {'data': JSON.stringify(props.data)}
+                }}
+            >
+                <Image source={{ uri: props.url }} style={styles.img}/>
+            </Link>
             <Text style={styles.title}>{props.title}</Text>
         </View>
     )

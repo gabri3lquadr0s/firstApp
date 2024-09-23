@@ -30,6 +30,9 @@ const Index = () => {
             <Link href="./aboutme" style={styles.links}>
                 <Text style={styles.linkText}>About me</Text>
             </Link>
+            <Link href="./ifome" style={styles.links}>
+                <Text style={styles.linkText}>iFome</Text>
+            </Link>
         </SafeAreaView>
     )
 }

@@ -40,7 +40,7 @@ const App = () => {
             <View style={styles.header}>
                 <Header link=".." title="iFome" />
                 <View style={styles.cartArea}>
-                    <Image source={require('../../assets/cart.png')} style={styles.cartImg}/>
+                    {/*<Image source={require('../../assets/cart.png')} style={styles.cartImg}/>*/}
                     <Text style={styles.txtCart}>{cart.length} itens</Text>
                     {
                         cart.length > 0 &&

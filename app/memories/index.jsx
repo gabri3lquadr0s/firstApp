@@ -12,7 +12,6 @@ const Memories = () => {
             const memories = await AsyncStorage.getItem('memories');
             setData(memories != null ? JSON.parse(memories) : []);
         } fetchData()
-        console.log(data)
     }, [])
 
     return(

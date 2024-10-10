@@ -27,7 +27,7 @@ const  Camera = () => {
         return(
             <View style={styles.camera}>
                 <Text style={styles.alert}>Você precisa da permissão para utilizar a câmera</Text>
-                <Button title={"Pedir permissão"} onPress={() => {askPermission(); askMicPermissions()}}/>
+                <Button title={"Pedir permissão"} onPress={() => {askPermission()}}/>
             </View>
         )
     }

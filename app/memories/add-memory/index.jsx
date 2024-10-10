@@ -1,18 +1,37 @@
 import React, {useState, useRef, useEffect} from "react";
-import {View, StyleSheet, Text, Image, Button, FlatList, TextInput, Pressable} from "react-native";
+import {View, StyleSheet, Text, Image, TextInput, Pressable, TouchableOpacity, ScrollView} from "react-native";
 import Header from "../../../components/header";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
+import {CameraView, useCameraPermissions} from "expo-camera";
 
 const AddMemory = () => {
+    const [permissions, askPermission] = useCameraPermissions();
+    const [camMode, camSetMode] = useState(false)
     const [title, setTitle] = useState("");
     const [year, setYear] = useState("");
     const [where, setWhere] = useState("");
     const [about, setAbout] = useState("");
     const [image, setImage] = useState(null);
+    const [facing, setFacing] = useState("front");
+    const cameraRef = useRef(null);
+
+    if(!permissions) {
+        return (
+            <View style={styles.container}></View>
+        )
+    }
+
+    if (!permissions.granted && permissions.canAskAgain) {
+        askPermission();
+    }
     
     const saveMemory = async () => {
+        if(title === "" || year === "" || where === ""){
+            return;
+        }
+
         try {
             let currentValue = await AsyncStorage.getItem("memories");
             if (currentValue != null) {
@@ -36,10 +55,25 @@ const AddMemory = () => {
                 await AsyncStorage.setItem("memories", parsedData);
             }
             router.replace('/memories')
+            return;
 
         } catch (e) {
             console.log(e);
         }
+    }
+
+    const changeCam = () => {
+        setFacing("front" ? "back" : "front");
+    }
+
+    const takePic = async () => {
+        const foto = await cameraRef.current?.takePictureAsync({
+            quality: 0.5,
+            base64: true,
+        });
+        console.log(foto.uri);
+        setImage(foto.uri);
+        camSetMode(false);
     }
 
     const pickImage = async () => {
@@ -57,24 +91,64 @@ const AddMemory = () => {
     
     return(
         <View style={styles.container}>
-            <Header link=".." title="Adicionar nova memória" />
-            <View>
-                <TextInput style={styles.input} placeholder={"Titulo"} onChangeText={(text) => setTitle(text)} maxLength={30}></TextInput>
-                <TextInput style={styles.input} keyboardType="numeric" placeholder={"Ano"} onChangeText={(text) => setYear(text)} maxLength={4}></TextInput>
-                <TextInput style={styles.input} placeholder={"Onde"} onChangeText={(text) => setWhere(text)} maxLength={50}></TextInput>
-                <TextInput style={styles.input} placeholder={"Sobre"} onChangeText={(text) => setAbout(text)} maxLength={250}></TextInput>
-                <Pressable onPress={pickImage} style={styles.imagePicker}>
-                    <Text style={styles.imagePickerText}>Adicionar imagem</Text>
-                </Pressable>
-                {image &&
-                    <Image source={{ uri: image }} style={styles.image} />
-                }
-                <View>
-                    <Pressable onPress={() => {saveMemory()}} style={styles.button}>
-                        <Text style={styles.buttonText}>Salvar memória</Text>
-                    </Pressable>
+            {!camMode ? (
+                <ScrollView style={styles.container}>
+                    <Header link=".." title="Adicionar nova memória" />
+                    <View>
+                        <TextInput style={styles.input} value={title} placeholder={"Titulo"} onChangeText={(text) => setTitle(text)} maxLength={30}></TextInput>
+                        <TextInput style={styles.input} value={year} keyboardType="numeric" placeholder={"Ano"} onChangeText={(text) => setYear(text)} maxLength={4}></TextInput>
+                        <TextInput style={styles.input} value={where} placeholder={"Onde"} onChangeText={(text) => setWhere(text)} maxLength={50}></TextInput>
+                        <TextInput style={styles.input} value={about} placeholder={"Sobre"} onChangeText={(text) => setAbout(text)} maxLength={250}></TextInput>
+                        <Pressable onPress={pickImage} style={styles.imagePicker}>
+                            <Text style={styles.imagePickerText}>Adicionar imagem da galeria</Text>
+                        </Pressable>
+                        {permissions.granted ? (
+                            <Pressable  style={styles.imagePicker} onPress={() => {camSetMode(true)}}>
+                                <Text style={styles.imagePickerText}>Tirar foto</Text>
+                            </Pressable>
+                        ) : (
+                            <Pressable  style={styles.imagePicker} onPress={() => {askPermission()}}>
+                                <Text style={styles.imagePickerText}>Permita o uso da câmera para tirar fotos</Text>
+                            </Pressable>
+                        )}
+
+                        <View>
+                            <Pressable onPress={() => {saveMemory()}} style={styles.button}>
+                                <Text style={styles.buttonText}>Salvar memória</Text>
+                            </Pressable>
+                        </View>
+                        {image &&
+                            <Image source={{ uri: image }} style={styles.image} />
+                        }
+                    </View>
+                </ScrollView>
+            ) : (
+                <View style={styles.container}>
+                    <CameraView facing={facing} style={styles.camera} ref={cameraRef}>
+                        <View style={styles.cambtn}>
+                            <TouchableOpacity onPress={() => takePic()}>
+                                <Image
+                                    style={styles.img2}
+                                    source={require('../../../assets/camera.png')}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => changeCam()}>
+                                <Image
+                                    style={styles.img2}
+                                    source={require('../../../assets/switch-camera.png')}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => camSetMode(false)}>
+                                <Image
+                                    style={styles.img2}
+                                    source={require('../../../assets/voltar.png')}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </CameraView>
                 </View>
-            </View>
+            )}
+
         </View>
     )
 }
@@ -112,7 +186,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: "100%",
-        height: 200,
+        height: 400,
         borderRadius: 10,
         marginVertical: 15,
     },
@@ -129,6 +203,23 @@ const styles = StyleSheet.create({
     imagePickerText: {
         fontSize: 16,
         color: "#333333",
+    },
+    cambtn: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: "space-evenly",
+        alignItems: 'flex-end',
+        marginBottom: 20,
+        width: 300
+    },
+    camera: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    img2: {
+        width: 45,
+        height: 45
     }
 })
 
